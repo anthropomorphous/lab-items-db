@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ItemsDB</string>
+    <string name="nameTextView">Наименование</string>
+    <string name="itemType">Тип товара</string>
 </resources>
