@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String ITEM_TABLE = "ITEM_TABLE";
+    public static final String COLUMN_ID = "ID";
     public static final String COLUMN_ITEM_NAME = "ITEM_NAME";
     public static final String COLUMN_ITEM_TYPE = "ITEM_TYPE";
     public static final String COLUMN_ITEM_COST = "ITEM_COST";
@@ -66,6 +67,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean deleteItem(ItemModel itemModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + ITEM_TABLE + " WHERE " + COLUMN_ID + " = " + itemModel.getId();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public List<ItemModel> getEveryone() {
         List<ItemModel> returnList = new ArrayList<>();
 
@@ -95,4 +109,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return returnList;
     }
+
+
 }

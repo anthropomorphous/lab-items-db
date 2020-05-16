@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     Button addButton;
     EditText editName, editType, editCost;
     ListView itemsList;
+    ArrayAdapter itemsAdapter;
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         editType = findViewById(R.id.editType);
         editCost = findViewById(R.id.editCost);
         itemsList = findViewById(R.id.itemsList);
+
+        dbHelper = new DBHelper(MainActivity.this);
+
+        // for working with the list we need an adapter
+        // in this case we will use "simple_list_item_1"
+        showList(dbHelper);
 
         // button listeners
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -50,20 +59,31 @@ public class MainActivity extends AppCompatActivity {
                     itemModel = new ItemModel(-1, "Error", "Error", 0);
                 }
 
-                DBHelper dbHelper = new DBHelper(MainActivity.this);
 
                 boolean success = dbHelper.addItem(itemModel);
                 Toast.makeText(MainActivity.this, "Добавлено:" + success, Toast.LENGTH_SHORT).show();
 
-                List<ItemModel> allItems = dbHelper.getEveryone();
-
-                // for working with the list we need an adapter
-                // in this case we will use "simple_list_item_1"
-                ArrayAdapter itemsAdapter = new ArrayAdapter<ItemModel>(MainActivity.this, android.R.layout.simple_list_item_1, allItems);
-                itemsList.setAdapter(itemsAdapter);
-
+                // so now list will be updated automatically when smth new is added to the db
+                showList(dbHelper);
             }
         });
 
+        itemsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long id) {
+                ItemModel clickedItem = (ItemModel) adapterView.getItemAtPosition(i);
+                dbHelper.deleteItem(clickedItem);
+                showList(dbHelper);
+                Toast.makeText(MainActivity.this, "Запись удалена", Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
+        
+    }
+
+    private void showList(DBHelper dbHelper1) {
+        itemsAdapter = new ArrayAdapter<ItemModel>(MainActivity.this, android.R.layout.simple_list_item_1, dbHelper1.getEveryone());
+        itemsList.setAdapter(itemsAdapter);
     }
 }
