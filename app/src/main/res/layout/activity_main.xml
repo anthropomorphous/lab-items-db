@@ -10,7 +10,7 @@
         android:id="@+id/editName"
         android:layout_width="321dp"
         android:layout_height="46dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/nameTextView"
         android:inputType="textPersonName"
@@ -23,7 +23,7 @@
         android:id="@+id/editType"
         android:layout_width="322dp"
         android:layout_height="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/itemType"
         android:inputType="textPersonName"
@@ -36,7 +36,7 @@
         android:id="@+id/editCost"
         android:layout_width="323dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="$"
         android:inputType="number"
@@ -58,12 +58,12 @@
     <ListView
         android:id="@+id/itemsList"
         android:layout_width="409dp"
-        android:layout_height="352dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:windowSoftInputMode="adjustPan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
