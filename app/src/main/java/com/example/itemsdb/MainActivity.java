@@ -52,16 +52,12 @@ public class MainActivity extends AppCompatActivity {
                             editName.getText().toString(),
                             editType.getText().toString(),
                             Float.parseFloat(editCost.getText().toString()));
-
-                    Toast.makeText(MainActivity.this, itemModel.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "Заполните все поля!", Toast.LENGTH_SHORT).show();
                     itemModel = new ItemModel(-1, "Error", "Error", 0);
                 }
 
-
                 boolean success = dbHelper.addItem(itemModel);
-                Toast.makeText(MainActivity.this, "Добавлено:" + success, Toast.LENGTH_SHORT).show();
 
                 // so now list will be updated automatically when smth new is added to the db
                 showList(dbHelper);
@@ -79,7 +75,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        
+
+        itemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+                ItemModel clickedItem = (ItemModel) adapterView.getItemAtPosition(i);
+
+                try {
+                    dbHelper.editItem(clickedItem,
+                            editName.getText().toString(),
+                            editType.getText().toString(),
+                            Float.parseFloat(editCost.getText().toString()));
+
+                    showList(dbHelper);
+                    Toast.makeText(MainActivity.this, "Запись изменена", Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Заполните поля", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void showList(DBHelper dbHelper1) {

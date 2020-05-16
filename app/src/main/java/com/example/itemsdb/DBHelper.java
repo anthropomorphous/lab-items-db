@@ -80,6 +80,19 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean editItem(ItemModel itemModel, String newName, String newType, Float newCost) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "UPDATE " + ITEM_TABLE +
+                " SET " + COLUMN_ITEM_NAME + " = '" + newName +
+                "', " + COLUMN_ITEM_TYPE + " = '" + newType +
+                "', " + COLUMN_ITEM_COST + " = '" + newCost +
+                "' WHERE " + COLUMN_ID + " = " + itemModel.getId();
+
+        db.execSQL(queryString);
+        return true;
+    }
+
+
     public List<ItemModel> getEveryone() {
         List<ItemModel> returnList = new ArrayList<>();
 

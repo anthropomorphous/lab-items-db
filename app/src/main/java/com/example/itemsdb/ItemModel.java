@@ -21,11 +21,10 @@ public class ItemModel {
     @NonNull
     @Override
     public String toString() {
-        return "ItemModel{" +
-                "id=" +
-                ", itemName=" + itemName +
-                ", itemType=" + itemType +
-                ", cost " + cost;
+        return " ID: " + id +
+                ", Товар: " + itemName +
+                ", Тип товара: " + itemType +
+                ", Цена: " + cost;
     }
 
     public int getId() {
